@@ -2,38 +2,42 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>索引で探す - 千代浦蝶美歌枠リスト</title>
+  <title>曲索引</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
-    h1 { margin-bottom: 20px; }
-    #song-index button {
+    button {
       margin: 5px;
       padding: 5px 10px;
-      cursor: pointer;
     }
-    ul { list-style: none; padding-left: 0; }
-    li { margin: 3px 0; }
+    #song-list {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>🎶 索引で探す（曲名リスト）</h1>
-
-  <div id="song-index">
-    <!-- 索引ボタン（例） -->
-    <button onclick="filterList('あ')">あ</button>
-    <button onclick="filterList('い')">い</button>
-    <!-- ... 他の50音も追加 ... -->
-  </div>
-
-  <ul id="song-list">
+  <h1>索引から曲を探す</h1>
+  <div id="index-buttons"></div>
+  <div id="song-list"></div>
 
   <script>
-    function filterList(letter) {
-      const items = document.querySelectorAll('#song-list li');
-      items.forEach(item => {
-        item.style.display = item.textContent.startsWith(letter) ? 'list-item' : 'none';
+    const indexes = ["0-9", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "漢字", "その他"];
+    const buttonContainer = document.getElementById("index-buttons");
+    const songListContainer = document.getElementById("song-list");
+
+    indexes.forEach(index => {
+      const btn = document.createElement("button");
+      btn.textContent = index;
+      btn.addEventListener("click", () => {
+        fetch(`songs/${index}.html`)
+          .then(res => res.text())
+          .then(html => {
+            songListContainer.innerHTML = html;
+          })
+          .catch(() => {
+            songListContainer.innerHTML = `<p>「${index}」の曲リストが見つかりませんでした。</p>`;
+          });
       });
-    }
+      buttonContainer.appendChild(btn);
+    });
   </script>
 </body>
 </html>
