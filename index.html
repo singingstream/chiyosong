@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
+  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>千代浦蝶美歌枠リスト</title>
+  
   <style>
     body {
       font-family: sans-serif;
@@ -6475,7 +6477,13 @@ function filterSongsByTitle(songName) {
     let found = false;
 
     songs.forEach(song => {
-      if (song.textContent.trim() === songName) {
+      const originalText = song.textContent.trim();
+      song.innerHTML = originalText; // 初期化
+
+      if (originalText === songName) {
+        // 🎯 該当する曲だけハイライト
+        const regex = new RegExp(`(${songName})`, 'g');
+        song.innerHTML = originalText.replace(regex, `<span class="highlight">$1</span>`);
         found = true;
       }
     });
@@ -6596,6 +6604,7 @@ document.addEventListener("DOMContentLoaded", () => {
     listContainer.style.display = "none";
   });
 });
+  
 </script>
 
 </body>
