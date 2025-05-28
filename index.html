@@ -106,13 +106,6 @@
   </a>
 </h1>
 
-<!-- このページについてリンク -->
-<div style="text-align: center; margin-bottom: 30px;">
-  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
-    📘 このページについて
-  </a>
-</div>
-
 <!-- 曲検索バー -->
 <input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">
 
@@ -6439,7 +6432,12 @@
       <li>アンパンマンのマーチ</li>
     </ul>
   </details>
-  
+  <!-- このページについてリンク -->
+<div style="text-align: center; margin-bottom: 30px;">
+  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
+    📘 このページについて
+  </a>
+</div>
 <script>
 function filterSongs() {
   const input = document.getElementById("searchBox").value.toLowerCase();
