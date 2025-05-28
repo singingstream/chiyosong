@@ -105,17 +105,27 @@
     千代浦蝶美歌枠リスト
   </a>
 </h1>
-  
+
+<!-- このページについてリンク -->
+<div style="text-align: center; margin-bottom: 30px;">
+  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
+    📘 このページについて
+  </a>
+</div>
+
 <!-- 曲検索バー -->
 <input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">
+
 
 <div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
   🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
 </div>
 
+
 <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
-  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲
+  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで表示）
 </div>
+
 
 <!-- 曲のアルファベット索引ボタン表示エリア -->
 <div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
@@ -123,20 +133,7 @@
 <!-- ユニーク曲のリスト表示エリア -->
 <div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
 
-<div style="text-align: margin-bottom: 30px;">
-  <p><a href="data-list.html" style="font-size: 24px; text-decoration: none; color: #0077cc;">
-    年月日から探す
-  </a></p>
-</div>
-
-<div style="text-align: margin-bottom: 30px;">
-  <p><a href="index-list.html" style="font-size: 24px; text-decoration: none; color: #0077cc;">
-    索引から探す
-  </a></p>
-</div>
-
-  
-   <details>
+  <details>
     <summary>📅 2021年</summary>
     <details>
       <summary>📅 12月</summary>
@@ -6386,7 +6383,7 @@
         <li>翼をください</li>
         <li>テトリス</li>
         <li>東京テディベア</li>
-        <li>夏を待つセイル(帆)のように</li>
+        <li>夏を待つセイル（帆）のように</li>
         <li>1/2</li>
         <li>NUDIE★</li>
         <li>Never say never</li>
@@ -6396,7 +6393,7 @@
         <li>ファンサ</li>
         <li>heavenly blue</li>
         <li>HOT LIMIT</li>
-        <li>丸ノ内サディスティック</li>
+        <li>丸の内サディスティック</li>
         <li>Meteor-ミーティア-</li>
         <li>夢幻期限</li>
         <li>女々しくて</li>
@@ -6413,45 +6410,7 @@
         <li>ン・パカマーチ</li>
     </ul>
 </details>
-  <details>
-    <summary>
-      <div>📅 25日</div>
-      <div>最強アニソンOP歌枠(月) <a href="https://www.youtube.com/live/A7sQe5l41ps?si=BJPTt-NFIXD8mpwx" target="_blank">配信はこちら</a></div>
-    </summary>
-    <ul>
-       <li>departure!</li>
-       <li>THE DAY</li>
-       <li>INVOKE-インヴォーク-</li>
-       <li>花になって</li>
-       <li>only my railgun</li>
-       <li>メリッサ</li>
-       <li>ゆずれない願い</li>
-       <li>innocent starter</li>
-       <li>君が好きだと叫びたい</li>
-       <li>DAN DAN 心魅かれてく</li>
-       <li>輝きは君の中に</li>
-       <li>Give a Reason</li>
-       <li>嵐の中で輝いて</li>
-       <li>愛をとりもどせ!!</li>
-       <li>JUST COMMUNICATION</li>
-       <li>バリバリ最強NO.1</li>
-       <li>Butter-Fly</li>
-       <li>IN MY DREAM</li>
-       <li>READY STEADY GO</li>
-       <li>シドニア</li>
-       <li>アンパンマンのマーチ</li>
-     </ul>
-   </details>
-</details>
-</details>
-  
-  <!-- このページについてリンク -->
-<div style="text-align: center; margin-bottom: 30px;">
-  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
-    📘 このページについて
-  </a>
-</div>
-  
+
 <script>
 function filterSongs() {
   const input = document.getElementById("searchBox").value.toLowerCase();
@@ -6494,12 +6453,104 @@ document.addEventListener("DOMContentLoaded", () => {
     songSet.add(name);
   });
 
-  // 合計歌枠回数表示
+   // 索引をクリックで表示させる
   document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${document.querySelectorAll("details > details > details").length} 回`;
-
-  // ユニーク曲数の表示
   const countSpan = document.getElementById("unique-count");
+  const listContainer = document.getElementById("unique-songs-list");
+  const indexContainer = document.getElementById("song-index");
+
+   // 索引の文字
+  const sortedSongs = Array.from(songSet).sort((a, b) => a.localeCompare(b, 'ja'));
+  const indexes = ["0-9", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "漢字", "その他"];
+
+
+  function getInitial(song) {
+    const c = song[0].toUpperCase();
+    const charMap = {"Ａ":"A","Ｂ":"B","Ｃ":"C","Ｄ":"D","Ｅ":"E","Ｆ":"F","Ｇ":"G","Ｈ":"H","Ｉ":"I","Ｊ":"J","Ｋ":"K","Ｌ":"L","Ｍ":"M","Ｎ":"N","Ｏ":"O","Ｐ":"P","Ｑ":"Q","Ｒ":"R","Ｓ":"S","Ｔ":"T","Ｕ":"U","Ｖ":"V","Ｗ":"W","Ｘ":"X","Ｙ":"Y","Ｚ":"Z"};
+    const normalized = charMap[c] || c;
+
+    if (/[0-9]/.test(normalized)) return "0-9";
+    if (/[A-Z]/.test(normalized)) return normalized;
+
+    const kanaGroups = {
+      "あ": "あいうえおアイウヴエオ",
+      "か": "かきくけこカキクケコがぎぐげごガギグゲゴ",
+      "さ": "さしすせそサシスセソざじずぜぞザジズゼゾ",
+      "た": "たちつてとタチツテトだぢづでどダヂヅデド",
+      "な": "なにぬねのナニヌネノ",
+      "は": "はひふへほハヒフヘホばびぶべぼバビブベボぱぴぷぺぽパピプペポ",
+      "ま": "まみむめもマミムメモ",
+      "や": "やゆよヤユヨ",
+      "ら": "らりるれろラリルレロ",
+      "わ": "わをんワヲン"
+    };
+    for (const key in kanaGroups) {
+      if (kanaGroups[key].includes(song[0])) return key;
+    }
+    if (/[一-鿿]/.test(song[0])) return "漢字";
+    return "その他";
+  }
+
+  const grouped = {};
+  sortedSongs.forEach(song => {
+    const initial = getInitial(song);
+    if (!grouped[initial]) grouped[initial] = [];
+    grouped[initial].push(song);
+  });
+
+
+// グループ化された曲リストを作成する部分で、回数も一緒に表示
+indexes.forEach(index => {
+  const btn = document.createElement("button");
+  btn.textContent = `${index}`;
+  btn.onclick = () => {
+    listContainer.innerHTML = "";
+    (grouped[index] || []).forEach(song => {
+      const count = songCounts[song]?.count || 1; // 回数を取得
+      const div = document.createElement("div");
+      div.textContent = `🎵 ${song}（${count}回）`;  // 曲名と回数を表示
+      listContainer.appendChild(div);
+    });
+    listContainer.style.display = "block";
+  };
+  indexContainer.appendChild(btn);
+});
+
+ const allBtn = document.createElement("button");
+  allBtn.textContent = "一覧(歌唱回数の多い順)";
+  allBtn.onclick = () => {
+    const isHidden = listContainer.style.display === "none" || listContainer.innerHTML === "";
+    if (isHidden) {
+      listContainer.innerHTML = "";
+
+     // 回数の多い順にソートして表示
+const sortedByCount = [...sortedSongs].sort((a, b) => {
+  const countA = songCounts[a]?.count || 1;
+  const countB = songCounts[b]?.count || 1;
+  return countB - countA;
+});
+
+sortedByCount.forEach(song => {
+  const count = songCounts[song]?.count || 1;
+  const div = document.createElement("div");
+  div.textContent = `🎵 ${song}（${count}回）`;
+  listContainer.appendChild(div);
+});
+
+      listContainer.style.display = "block";
+    } else {
+      listContainer.style.display = "none";
+    }
+  };
+  indexContainer.appendChild(allBtn);
+
   countSpan.textContent = songSet.size;
+  document.getElementById("unique-count-display").addEventListener("click", () => {
+    indexContainer.style.display = indexContainer.style.display === "none" ? "flex" : "none";
+    listContainer.style.display = "none";
+  });
 });
 </script>
 
+</body>
+</html>
