@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>索引で探す - 千代浦蝶美歌枠リスト</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { margin-bottom: 20px; }
+    #song-index button {
+      margin: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    ul { list-style: none; padding-left: 0; }
+    li { margin: 3px 0; }
+  </style>
+</head>
+<body>
+  <h1>🎶 索引で探す（曲名リスト）</h1>
+
+  <div id="song-index">
+    <!-- 索引ボタン（例） -->
+    <button onclick="filterList('あ')">あ</button>
+    <button onclick="filterList('い')">い</button>
+    <!-- ... 他の50音も追加 ... -->
+  </div>
+
+  <ul id="song-list">
+    <li>あわてんぼうのサンタクロース</li>
+    <li>いち、にの、さんっ！</li>
+    <li>おジャ魔女カーニバル!!</li>
+    <li>キューティーハニー</li>
+    <li>限界突破×サバイバー</li>
+    <!-- ... 全曲リスト ... -->
+  </ul>
+
+  <script>
+    function filterList(letter) {
+      const items = document.querySelectorAll('#song-list li');
+      items.forEach(item => {
+        item.style.display = item.textContent.startsWith(letter) ? 'list-item' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
