@@ -6458,12 +6458,24 @@ document.addEventListener("DOMContentLoaded", () => {
     songSet.add(name);
   });
 
-// 🎤 合計歌枠回数の正しいカウント
-let songSessionCount = 0;
-document.querySelectorAll("details").forEach(detail => {
-  if (detail.querySelector("ul")) songSessionCount++;
+document.addEventListener("DOMContentLoaded", () => {
+  // 歌枠 = <details> の中に <ul>（曲リスト）がある最下層の details
+  const allDetails = document.querySelectorAll("details");
+  let songSessionCount = 0;
+
+  allDetails.forEach(detail => {
+    // 子に details が無く、かつ ul があればそれは配信（歌枠）と見なす
+    const hasSubDetails = detail.querySelector("details");
+    const hasSongList = detail.querySelector("ul");
+
+    if (!hasSubDetails && hasSongList) {
+      songSessionCount++;
+    }
+  });
+
+  // 合計を表示
+  document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${songSessionCount} 回`;
 });
-document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${songSessionCount} 回`;
 
   const countSpan = document.getElementById("unique-count");
   const listContainer = document.getElementById("unique-songs-list");
