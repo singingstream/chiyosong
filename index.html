@@ -11,13 +11,15 @@
       padding: 20px;
       color: #333;
     }
+
     h1 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     #searchBox {
       display: block;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 30px auto; /* 下に空白をつける */
       padding: 10px;
       width: 100%;
       max-width: 400px;
@@ -25,87 +27,111 @@
       border-radius: 8px;
       border: 1px solid #ccc;
     }
+
     details {
       background: #fff;
       padding: 15px;
       margin-bottom: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-top: 2em;
     }
+
     summary {
       font-size: 1.2em;
       cursor: pointer;
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     summary a {
       font-size: 0.9em;
       margin-left: 10px;
       text-decoration: none;
       color: #0077cc;
     }
+
     ul {
       list-style: none;
       padding-left: 0;
     }
+
     li {
       padding: 5px 0;
     }
+
     .highlight {
       background-color: yellow;
       font-weight: bold;
     }
+
     .count {
       font-size: 1.2em;
       font-weight: bold;
       margin-bottom: 1em;
     }
+
+    /* インデックスボタンのスタイル */
     #song-index button {
       padding: 4px 8px;
       cursor: pointer;
     }
+
+    /* ユニーク曲のインデックス全体の表示エリア */
     #song-index {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 0;
+    padding: 10px 0;
+    display: block;
+    margin-bottom: 40px; /* ← これがスペース部分 */
     }
+
+
+    /* 曲一覧リストのエリア */
     #unique-songs-list {
       display: none;
-      margin-top: 0;
-      margin-bottom: 1.5em;
+      margin-top: 10px;
     }
+
+    /* リンク */
     a {
       text-decoration: none;
     }
   </style>
+
 </head>
 <body>
-  <h1>
-    <a href="http://www.youtube.com/@chiyomi0812" target="_blank" style="text-decoration: none; color: inherit;">
-      千代浦蝶美歌枠リスト
-    </a>
-  </h1>
-  <div style="text-align: center; margin-bottom: 30px;">
-    <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
-      📘 このページについて
-    </a>
-  </div>
- <!-- 曲検索バー -->
-<input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">  
+
+<!-- ページタイトル -->
+<h1 style="text-align: center; margin-bottom: 10px;">
+  🎤<a href="http://www.youtube.com/@chiyomi0812" target="_blank" style="text-decoration: none; color: inherit;">
+    千代浦蝶美歌枠リスト
+  </a>🎤
+</h1>
+
+<!-- このページについてリンク -->
+<div style="text-align: center; margin-bottom: 30px;">
+  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
+    📘 このページについて
+  </a>
+</div>
+
+<!-- 曲検索バー -->
+<input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">
+
 
 <div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
   🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
 </div>
 
+
 <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
   🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで表示）
 </div>
-  
-  <div id="song-index" style="display: none;"></div>
-  <div id="unique-songs-list" style="display: none;"></div>
-  
+
+
+<!-- 曲のアルファベット索引ボタン表示エリア -->
+<div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
+
+<!-- ユニーク曲のリスト表示エリア -->
+<div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
   <details>
     <summary>📅 2021年</summary>
     <details>
@@ -6447,6 +6473,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const songSet = new Set();
   const songCounts = {};
 
+ // カウントと重複削除処理
   allSongs.forEach(li => {
     const name = li.textContent.trim();
     if (!songCounts[name]) {
@@ -6458,37 +6485,25 @@ document.addEventListener("DOMContentLoaded", () => {
     songSet.add(name);
   });
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 歌枠 = <details> の中に <ul>（曲リスト）がある最下層の details
-  const allDetails = document.querySelectorAll("details");
-  let songSessionCount = 0;
-
-  allDetails.forEach(detail => {
-    // 子に details が無く、かつ ul があればそれは配信（歌枠）と見なす
-    const hasSubDetails = detail.querySelector("details");
-    const hasSongList = detail.querySelector("ul");
-
-    if (!hasSubDetails && hasSongList) {
-      songSessionCount++;
-    }
-  });
-
-  // 合計を表示
-  document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${songSessionCount} 回`;
-});
-
+  // 索引をクリックで表示させる
+  document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${document.querySelectorAll("details > details > details").length} 回`;
   const countSpan = document.getElementById("unique-count");
   const listContainer = document.getElementById("unique-songs-list");
   const indexContainer = document.getElementById("song-index");
+
+   // 索引の文字
   const sortedSongs = Array.from(songSet).sort((a, b) => a.localeCompare(b, 'ja'));
   const indexes = ["0-9", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ", "漢字", "その他"];
+
 
   function getInitial(song) {
     const c = song[0].toUpperCase();
     const charMap = {"Ａ":"A","Ｂ":"B","Ｃ":"C","Ｄ":"D","Ｅ":"E","Ｆ":"F","Ｇ":"G","Ｈ":"H","Ｉ":"I","Ｊ":"J","Ｋ":"K","Ｌ":"L","Ｍ":"M","Ｎ":"N","Ｏ":"O","Ｐ":"P","Ｑ":"Q","Ｒ":"R","Ｓ":"S","Ｔ":"T","Ｕ":"U","Ｖ":"V","Ｗ":"W","Ｘ":"X","Ｙ":"Y","Ｚ":"Z"};
     const normalized = charMap[c] || c;
+
     if (/[0-9]/.test(normalized)) return "0-9";
     if (/[A-Z]/.test(normalized)) return normalized;
+
     const kanaGroups = {
       "あ": "あいうえおアイウヴエオ",
       "か": "かきくけこカキクケコがぎぐげごガギグゲゴ",
@@ -6515,49 +6530,45 @@ document.addEventListener("DOMContentLoaded", () => {
     grouped[initial].push(song);
   });
 
-  let currentIndex = null;
-  indexes.forEach(index => {
-    const btn = document.createElement("button");
-    btn.textContent = `${index}`;
-    btn.onclick = () => {
-      if (currentIndex === index) {
-        listContainer.style.display = "none";
-        listContainer.innerHTML = "";
-        currentIndex = null;
-        return;
-      }
-      listContainer.innerHTML = "";
-      (grouped[index] || []).forEach(song => {
-        const count = songCounts[song]?.count || 1;
-        const div = document.createElement("div");
-        div.textContent = `🎵 ${song}（${count}回）`;
-        div.style.cursor = "pointer";
-        div.onclick = () => filterSongsByTitle(song);
-        listContainer.appendChild(div);
-      });
-      listContainer.style.display = "block";
-      currentIndex = index;
-    };
-    indexContainer.appendChild(btn);
-  });
 
-  const allBtn = document.createElement("button");
+// グループ化された曲リストを作成する部分で、回数も一緒に表示
+indexes.forEach(index => {
+  const btn = document.createElement("button");
+  btn.textContent = `${index}`;
+  btn.onclick = () => {
+    listContainer.innerHTML = "";
+    (grouped[index] || []).forEach(song => {
+      const count = songCounts[song]?.count || 1; // 回数を取得
+      const div = document.createElement("div");
+      div.textContent = `🎵 ${song}（${count}回）`;  // 曲名と回数を表示
+      listContainer.appendChild(div);
+    });
+    listContainer.style.display = "block";
+  };
+  indexContainer.appendChild(btn);
+});
+
+ const allBtn = document.createElement("button");
   allBtn.textContent = "一覧(歌唱回数の多い順)";
   allBtn.onclick = () => {
     const isHidden = listContainer.style.display === "none" || listContainer.innerHTML === "";
     if (isHidden) {
       listContainer.innerHTML = "";
-      const sortedByCount = [...sortedSongs].sort((a, b) => {
-        const countA = songCounts[a]?.count || 1;
-        const countB = songCounts[b]?.count || 1;
-        return countB - countA;
-      });
-      sortedByCount.forEach(song => {
-        const count = songCounts[song]?.count || 1;
-        const div = document.createElement("div");
-        div.textContent = `🎵 ${song}（${count}回）`;
-        listContainer.appendChild(div);
-      });
+
+     // 回数の多い順にソートして表示
+const sortedByCount = [...sortedSongs].sort((a, b) => {
+  const countA = songCounts[a]?.count || 1;
+  const countB = songCounts[b]?.count || 1;
+  return countB - countA;
+});
+
+sortedByCount.forEach(song => {
+  const count = songCounts[song]?.count || 1;
+  const div = document.createElement("div");
+  div.textContent = `🎵 ${song}（${count}回）`;
+  listContainer.appendChild(div);
+});
+
       listContainer.style.display = "block";
     } else {
       listContainer.style.display = "none";
@@ -6572,5 +6583,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 </body>
 </html>
