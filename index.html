@@ -89,14 +89,29 @@
       display: none;
       margin-top: 10px;
     }
+    
+   /* 索引と曲リスト間の余白をなくす */
+    #song-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 0;
+    }
 
+    /* 曲リストの上下余白 */
+    #unique-songs-list {
+      display: none;
+      margin-top: 0;
+      margin-bottom: 1.5em;
+    }
+    
     /* リンク */
     a {
       text-decoration: none;
     }
   </style>
-
 </head>
+
 <body>
 
 <!-- ページタイトル -->
@@ -116,22 +131,22 @@
 <!-- 曲検索バー -->
 <input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">
 
-
+<!-- 合計歌枠回数 -->
 <div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
   🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
 </div>
 
-
+<!-- ユニーク曲数 -->
 <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
   🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで表示）
 </div>
-
 
 <!-- 曲のアルファベット索引ボタン表示エリア -->
 <div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
 
 <!-- ユニーク曲のリスト表示エリア -->
 <div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
+  
   <details>
     <summary>📅 2021年</summary>
     <details>
