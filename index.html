@@ -6477,6 +6477,11 @@
         }
         songSet.add(name);
       });
+      
+　　  // ✅ 正しい合計歌枠回数（歌枠の <details> タグ数）
+　　  const totalDetails = document.querySelectorAll("body > details").length;
+　　  document.getElementById("count-display").innerHTML =
+　    `🎤 <span>合計歌枠回数: </span><span id="total-songs-count">${totalDetails}</span>回`;
 
       const countSpan = document.getElementById("unique-count");
       const listContainer = document.getElementById("unique-songs-list");
