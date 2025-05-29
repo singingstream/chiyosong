@@ -6480,23 +6480,20 @@ function filterSongsByTitle(title) {
     details.style.display = match ? "block" : "none";
   });
 
-  const listContainer = document.getElementById("unique-songs-list");
-  listContainer.innerHTML = "";
+(grouped[index] || []).forEach(song => {
+  const count = songCounts[song]?.count || 1;
+  const link = document.createElement("a");
+  link.href = "#";
+  link.textContent = `🎵 ${song}（${count}回）`;
+  link.onclick = (e) => {
+    e.preventDefault();
+    filterSongsByTitle(song);
+  };
   const div = document.createElement("div");
-　const link = document.createElement("a");
-　link.href = "#";
-　link.textContent = `🎵 ${song}（${count}回）`;
-　link.onclick = (e) => {
-  e.preventDefault();
-  filterSongsByTitle(song);
-};
+  div.appendChild(link);
+  listContainer.appendChild(div);
+});
 
-const div = document.createElement("div");
-div.appendChild(link);
-listContainer.appendChild(div);
-
-  listContainer.style.display = "block";
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   const allSongs = document.querySelectorAll("li");
@@ -6583,18 +6580,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const countB = songCounts[b]?.count || 1;
         return countB - countA;
       });
-      sortedByCount.forEach(song => {
-        const count = songCounts[song]?.count || 1;
-        const div = document.createElement("div");
-        div.textContent = `🎵 ${song}（${count}回）`;
-        listContainer.appendChild(div);
-      });
-      listContainer.style.display = "block";
-    } else {
-      listContainer.style.display = "none";
-    }
+   sortedByCount.forEach(song => {
+  const count = songCounts[song]?.count || 1;
+  const link = document.createElement("a");
+  link.href = "#";
+  link.textContent = `🎵 ${song}（${count}回）`;
+  link.onclick = (e) => {
+    e.preventDefault();
+    filterSongsByTitle(song);
   };
-  indexContainer.appendChild(allBtn);
+  const div = document.createElement("div");
+  div.appendChild(link);
+  listContainer.appendChild(div);
+});
+
 
   // ✅ ここがリセットボタンの追加処理
   const resetBtn = document.createElement("button");
