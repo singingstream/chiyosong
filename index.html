@@ -6578,12 +6578,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const isHidden = listContainer.style.display === "none" || listContainer.innerHTML === "";
     if (isHidden) {
       listContainer.innerHTML = "";
-
-<!-- インデックスとリセットボタン -->
-<div style="display: flex; gap: 10px; align-items: center; margin-bottom: 1em;">
-  <button onclick="showSortedList()" style="padding: 6px 12px; cursor: pointer;">一覧（歌唱回数の多い順）</button>
-  <button onclick="resetFilters()" style="padding: 6px 12px; cursor: pointer;">初期化</button>
-</div>
       
      // 回数の多い順にソートして表示
 const sortedByCount = [...sortedSongs].sort((a, b) => {
