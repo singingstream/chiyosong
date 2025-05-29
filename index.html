@@ -6579,6 +6579,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isHidden) {
       listContainer.innerHTML = "";
 
+<!-- インデックスとリセットボタン -->
+<div style="display: flex; gap: 10px; align-items: center; margin-bottom: 1em;">
+  <button onclick="showSortedList()" style="padding: 6px 12px; cursor: pointer;">一覧（歌唱回数の多い順）</button>
+  <button onclick="resetFilters()" style="padding: 6px 12px; cursor: pointer;">初期化</button>
+</div>
+      
      // 回数の多い順にソートして表示
 const sortedByCount = [...sortedSongs].sort((a, b) => {
   const countA = songCounts[a]?.count || 1;
@@ -6608,5 +6614,19 @@ sortedByCount.forEach(song => {
 });
 </script>
 
+<script>
+  function resetFilters() {
+    document.getElementById('searchBox').value = '';
+    filterSongs(); // 検索リセット（既にある関数）
+    document.getElementById('song-index').style.display = 'none';
+    document.getElementById('unique-songs-list').style.display = 'none';
+  }
+
+  function showSortedList() {
+    // 仮の関数（実際の実装に合わせて書き換えてください）
+    alert("並び替え機能をここに実装してください");
+  }
+</script>
+  
 </body>
 </html>
