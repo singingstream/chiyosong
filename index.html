@@ -6458,9 +6458,12 @@ document.addEventListener("DOMContentLoaded", () => {
     songSet.add(name);
   });
 
-  const totalDetails = document.querySelectorAll("body > details").length;
-  document.getElementById("count-display").innerHTML =
-    `🎤 <span>合計歌枠回数: </span><span id="total-songs-count">${totalDetails}</span>回`;
+// 🎤 合計歌枠回数の正しいカウント
+let songSessionCount = 0;
+document.querySelectorAll("details").forEach(detail => {
+  if (detail.querySelector("ul")) songSessionCount++;
+});
+document.getElementById("count-display").textContent = `🎤 合計歌枠回数: ${songSessionCount} 回`;
 
   const countSpan = document.getElementById("unique-count");
   const listContainer = document.getElementById("unique-songs-list");
