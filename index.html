@@ -6446,8 +6446,8 @@
 </details>
 
 <script>
-function filterSongs() {
-  const input = document.getElementById("searchBox").value.toLowerCase();
+function filterSongsByTitle(title) {
+  const input = title.toLowerCase();
   const detailsList = document.querySelectorAll("details");
 
   detailsList.forEach(details => {
@@ -6459,15 +6459,19 @@ function filterSongs() {
       song.innerHTML = originalText;
       song.classList.remove("highlight");
 
-      if (input !== "" && originalText.toLowerCase().includes(input)) {
+      if (originalText.toLowerCase().includes(input)) {
         const regex = new RegExp(`(${input})`, 'gi');
         song.innerHTML = originalText.replace(regex, `<span class="highlight">$1</span>`);
         match = true;
       }
     });
 
-    details.style.display = match || input === "" ? "block" : "none";
+    details.style.display = match ? "block" : "none";
   });
+
+  // 索引下リストを閉じる
+  const listContainer = document.getElementById("unique-songs-list");
+  listContainer.style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
