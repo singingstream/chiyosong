@@ -96,7 +96,25 @@
     a {
       text-decoration: none;
     }
-  </style>
+
+<style>
+#song-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px; /* ボタンの間隔 */
+  margin-bottom: 0; /* 曲リストとの空白をなくす */
+}
+
+#unique-songs-list {
+  margin-top: 0; /* 上の空白をなくす */
+  margin-bottom: 1.5em; /* 下に空白を追加して年月日との距離を作る */
+}
+
+details {
+  margin-top: 1em; /* 年月日セクションとの間隔をしっかり作る */
+}
+    
+</style>
 
 </head>
 <body>
