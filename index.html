@@ -92,11 +92,17 @@
       📘 このページについて
     </a>
   </div>
-  <input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）">
-  <div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;"></div>
-  <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
-    🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで索引を表示）
-  </div>
+ <!-- 曲検索バー -->
+<input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">  
+
+<div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
+  🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
+</div>
+
+<div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
+  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで表示）
+</div>
+  
   <div id="song-index" style="display: none;"></div>
   <div id="unique-songs-list" style="display: none;"></div>
   
