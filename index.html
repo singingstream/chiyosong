@@ -6534,21 +6534,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // グループ化された曲リストを作成する部分で、回数も一緒に表示
-indexes.forEach(index => {
-  const btn = document.createElement("button");
-  btn.textContent = `${index}`;
-  btn.onclick = () => {
-    listContainer.innerHTML = "";
-    (grouped[index] || []).forEach(song => {
-      const count = songCounts[song]?.count || 1; // 回数を取得
-      const div = document.createElement("div");
-      div.textContent = `🎵 ${song}（${count}回）`;  // 曲名と回数を表示
-      listContainer.appendChild(div);
-    });
-    listContainer.style.display = "block";
-  };
-  indexContainer.appendChild(btn);
-});
+  let currentIndex = null; // 直前にクリックされたインデックス
+
+  indexes.forEach(index => {
+    const btn = document.createElement("button");
+    btn.textContent = `${index}`;
+    btn.onclick = () => {
+      if (currentIndex === index) {
+        // 同じインデックスが再クリックされたらリストを閉じる
+        listContainer.style.display = "none";
+        listContainer.innerHTML = "";
+        currentIndex = null;
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      (grouped[index] || []).forEach(song => {
+        const count = songCounts[song]?.count || 1;
+        const div = document.createElement("div");
+        div.textContent = `🎵 ${song}（${count}回）`;
+        div.style.cursor = "pointer";
+        div.onclick = () => filterSongsByTitle(song);
+        listContainer.appendChild(div);
+      });
+      listContainer.style.display = "block";
+      currentIndex = index;
+    };
+    indexContainer.appendChild(btn);
+  });
+
 
  const allBtn = document.createElement("button");
   allBtn.textContent = "一覧(歌唱回数の多い順)";
