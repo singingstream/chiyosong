@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
-  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>千代浦蝶美歌枠リスト</title>
-  
+
   <style>
     body {
       font-family: sans-serif;
@@ -21,7 +20,7 @@
 
     #searchBox {
       display: block;
-      margin: 0 auto 30px auto; /* 下に空白をつける */
+      margin: 0 auto 30px auto;
       padding: 10px;
       width: 100%;
       max-width: 400px;
@@ -36,6 +35,7 @@
       margin-bottom: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 2em; /* 曲リストとの距離を作る */
     }
 
     summary {
@@ -78,81 +78,62 @@
       cursor: pointer;
     }
 
-    /* ユニーク曲のインデックス全体の表示エリア */
+    /* 索引と曲リスト間の余白をなくす */
     #song-index {
-    padding: 10px 0;
-    display: block;
-    margin-bottom: 40px; /* ← これがスペース部分 */
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 0;
     }
 
-
-    /* 曲一覧リストのエリア */
+    /* 曲リストの上下余白 */
     #unique-songs-list {
       display: none;
-      margin-top: 10px;
+      margin-top: 0;
+      margin-bottom: 1.5em;
     }
 
     /* リンク */
     a {
       text-decoration: none;
     }
-
-<style>
-#song-index {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px; /* ボタンの間隔 */
-  margin-bottom: 0; /* 曲リストとの空白をなくす */
-}
-
-#unique-songs-list {
-  margin-top: 0; /* 上の空白をなくす */
-  margin-bottom: 1.5em; /* 下に空白を追加して年月日との距離を作る */
-}
-
-details {
-  margin-top: 1em; /* 年月日セクションとの間隔をしっかり作る */
-}
-    
-</style>
-
+  </style>
 </head>
+
 <body>
 
-<!-- ページタイトル -->
-<h1 style="text-align: center; margin-bottom: 10px;">
-  <a href="http://www.youtube.com/@chiyomi0812" target="_blank" style="text-decoration: none; color: inherit;">
-    千代浦蝶美歌枠リスト
-  </a>
-</h1>
+  <!-- ページタイトル -->
+  <h1>
+    <a href="http://www.youtube.com/@chiyomi0812" target="_blank" style="text-decoration: none; color: inherit;">
+      千代浦蝶美歌枠リスト
+    </a>
+  </h1>
 
-<!-- このページについてリンク -->
-<div style="text-align: center; margin-bottom: 30px;">
-  <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
-    📘 このページについて
-  </a>
-</div>
+  <!-- このページについてリンク -->
+  <div style="text-align: center; margin-bottom: 30px;">
+    <a href="about.html" style="font-size: 1em; text-decoration: none; color: #0077cc;">
+      📘 このページについて
+    </a>
+  </div>
 
-<!-- 曲検索バー -->
-<input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）" style="display: block; margin: 0 auto; padding: 10px; width: 100%; max-width: 400px; font-size: 1em; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 30px;">
+  <!-- 曲検索バー -->
+  <input type="text" id="searchBox" onkeyup="filterSongs()" placeholder="曲名で検索（例: いち、にの、さんっ！）">
 
+  <!-- 合計歌枠回数 -->
+  <div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
+    🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
+  </div>
 
-<div class="count" id="count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
-  🎤 <span>合計歌枠回数: </span><span id="total-songs-count">0</span>回
-</div>
+  <!-- ユニーク曲数 -->
+  <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
+    🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで索引を表示）
+  </div>
 
+  <!-- 索引ボタン -->
+  <div id="song-index" style="display: none;"></div>
 
-<div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
-  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで索引を表示）
-</div>
-
-<!-- 曲のアルファベット索引ボタン表示エリア -->
-<div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
-
-<div id="unique-songs-list" style="display: none;"></div>
-  
-<!-- ユニーク曲のリスト表示エリア -->
-<div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
+  <!-- 曲リスト -->
+  <div id="unique-songs-list" style="display: none;"></div>
 
   <details>
     <summary>📅 2021年</summary>
