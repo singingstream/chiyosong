@@ -6460,23 +6460,30 @@
 function filterSongsByTitle(title) {
   const input = title.toLowerCase();
   const detailsList = document.querySelectorAll("details");
+
+  // 配信リストを曲名で絞り込み
   detailsList.forEach(details => {
     const songs = details.querySelectorAll("li");
     let match = false;
+
     songs.forEach(song => {
       const originalText = song.textContent;
       song.innerHTML = originalText;
       song.classList.remove("highlight");
+
       if (originalText.toLowerCase().includes(input)) {
         const regex = new RegExp(`(${input})`, 'gi');
         song.innerHTML = originalText.replace(regex, `<span class="highlight">$1</span>`);
         match = true;
       }
     });
+
     details.style.display = match ? "block" : "none";
   });
+
+  // 🎯 索引の下のリスト（unique-songs-list）を1件のみに更新
   const listContainer = document.getElementById("unique-songs-list");
-  listContainer.innerHTML = "";
+  listContainer.innerHTML = ""; // 一旦消す
   const div = document.createElement("div");
   div.textContent = `🎵 ${title}`;
   listContainer.appendChild(div);
