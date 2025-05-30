@@ -138,14 +138,11 @@
 
 <!-- ユニーク曲数 -->
 <div id="unique-count-display" style="cursor: pointer; font-weight: bold; font-size: 24px; margin-bottom: 15px;">
-  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで表示）
+  🎶 <span>歌った曲数: </span><span id="unique-count">0</span>曲（クリックで索引を表示）
 </div>
 
 <!-- 曲のアルファベット索引ボタン表示エリア -->
 <div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
-
-<button id="reset-song-filter">🔄 絞り込みリセット</button>
-
 
 <!-- ユニーク曲のリスト表示エリア -->
 <div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
@@ -6633,15 +6630,13 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   indexContainer.appendChild(allBtn);
 
-  countSpan.textContent = songSet.size;
-  document.getElementById("unique-count-display").addEventListener("click", () => {
-    indexContainer.style.display = indexContainer.style.display === "none" ? "flex" : "none";
-    listContainer.style.display = "none";
-    document.querySelectorAll("#song-index button").forEach(b => b.classList.remove("active"));
-  });
-});
+// 🔄 リセットボタンの生成と追加（索引の末尾）
+const resetBtn = document.createElement("button");
+resetBtn.textContent = "🔄 絞り込みリセット";
+resetBtn.id = "reset-song-filter";
+resetBtn.style.marginLeft = "8px"; // 少し余白を追加（任意）
 
-document.getElementById("reset-song-filter").addEventListener("click", () => {
+resetBtn.addEventListener("click", () => {
   // 年月日リストをすべて表示
   document.querySelectorAll("details").forEach(details => details.style.display = "block");
 
@@ -6660,6 +6655,16 @@ document.getElementById("reset-song-filter").addEventListener("click", () => {
 
   // フィルタ状態リセット
   currentFilteredSong = null;
+});
+
+indexContainer.appendChild(resetBtn);
+
+  countSpan.textContent = songSet.size;
+  document.getElementById("unique-count-display").addEventListener("click", () => {
+    indexContainer.style.display = indexContainer.style.display === "none" ? "flex" : "none";
+    listContainer.style.display = "none";
+    document.querySelectorAll("#song-index button").forEach(b => b.classList.remove("active"));
+  });
 });
 
 </script>
