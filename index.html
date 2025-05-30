@@ -144,6 +144,9 @@
 <!-- 曲のアルファベット索引ボタン表示エリア -->
 <div id="song-index" style="display: none; margin-top: 10px; flex-wrap: wrap; gap: 12px;"></div>
 
+<button id="reset-song-filter">🔄 絞り込みリセット</button>
+
+
 <!-- ユニーク曲のリスト表示エリア -->
 <div id="unique-songs-list" style="display: none; margin-top: 10px;"></div>
   
@@ -6637,6 +6640,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("#song-index button").forEach(b => b.classList.remove("active"));
   });
 });
+
+document.getElementById("reset-song-filter").addEventListener("click", () => {
+  // 年月日リストをすべて表示
+  document.querySelectorAll("details").forEach(details => details.style.display = "block");
+
+  // ハイライト解除
+  document.querySelectorAll("li").forEach(li => li.classList.remove("highlight"));
+
+  // 索引リストの曲名すべて表示
+  document.querySelectorAll("#unique-songs-list div").forEach(div => div.style.display = "block");
+
+  // 索引（indexボタン）とリストを非表示にする
+  document.getElementById("song-index").style.display = "none";
+  document.getElementById("unique-songs-list").style.display = "none";
+
+  // アクティブ状態のボタン解除
+  document.querySelectorAll("#song-index button").forEach(btn => btn.classList.remove("active"));
+
+  // フィルタ状態リセット
+  currentFilteredSong = null;
+});
+
 </script>
 
 </body>
