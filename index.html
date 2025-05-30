@@ -6485,15 +6485,13 @@ let currentFilteredSong = null;
 function filterBySongName(songName) {
   const detailsList = document.querySelectorAll("details");
   const allSongs = document.querySelectorAll("li");
+  const allIndexSongs = document.querySelectorAll("#unique-songs-list div"); // 🎵 索引側の曲名リスト
 
   if (currentFilteredSong === songName) {
-    detailsList.forEach(details => {
-      details.style.display = "block";
-      details.querySelectorAll("li").forEach(li => {
-        li.style.display = "";
-        li.classList.remove("highlight");
-      });
-    });
+    // フィルター解除
+    detailsList.forEach(details => details.style.display = "block");
+    allSongs.forEach(li => li.classList.remove("highlight"));
+    allIndexSongs.forEach(div => div.style.display = "block"); // ← 索引を元に戻す
     currentFilteredSong = null;
   } else {
     currentFilteredSong = songName;
@@ -6503,14 +6501,22 @@ function filterBySongName(songName) {
       songItems.forEach(li => {
         if (li.textContent.trim() === songName) {
           matched = true;
-          li.style.display = "";
           li.classList.add("highlight");
         } else {
-          li.style.display = "none";
           li.classList.remove("highlight");
         }
       });
       details.style.display = matched ? "block" : "none";
+    });
+
+    // 索引の他の曲名を非表示にする
+    allIndexSongs.forEach(div => {
+      const text = div.textContent.trim();
+      if (!text.includes(songName)) {
+        div.style.display = "none";
+      } else {
+        div.style.display = "block";
+      }
     });
   }
 }
